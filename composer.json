@@ -1,5 +1,6 @@
 {
   "name": "bhcosta90/package-booking",
+  "description": "A package to manage bookings",
   "autoload": {
     "psr-4": {
       "Package\\": "src/"
