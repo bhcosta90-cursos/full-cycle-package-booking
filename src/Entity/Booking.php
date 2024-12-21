@@ -41,6 +41,10 @@ class Booking
             0.0 => $this->status = BookingStatus::Confirmed,
             default => $this->status = BookingStatus::Pending,
         };
+
+        if (!$this->property->isAvailable($this->dateRange)) {
+            throw new EntityExpetion('A propriedade não está disponível para a data solicitadas.');
+        }
     }
 
     public function isConfirmed(): bool
