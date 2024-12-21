@@ -1,15 +1,15 @@
 <?php
 
-use Package\Service\UserService;
-use Tests\Traits\Repository\UserRepositoryInterfaceTrait;
+use Package\Service\PropertyService;
+use Tests\Traits\Repository\PropertyRepositoryInterfaceTrait;
 
-uses(UserRepositoryInterfaceTrait::class);
+uses(PropertyRepositoryInterfaceTrait::class);
 
 beforeEach(function () {
-    $this->service = new UserService(
-        userRepository: $this
-            ->findUserRepositoryInterface()
-            ->getMockUserRepositoryInterface(),
+    $this->service = new PropertyService(
+        propertyRepository: $this
+            ->findPropertyRepositoryInterface()
+            ->getMockPropertyRepositoryInterface(),
     );
 });
 
@@ -25,5 +25,5 @@ test('deve retornar usuário quando um id for valido for passado', function () {
     expect($response)
         ->not->toBeNull()
         ->id->toBe("fulano")
-        ->name->toBe('Fulano');
+        ->title->toBe('Fulano');
 });

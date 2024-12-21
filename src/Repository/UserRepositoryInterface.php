@@ -6,5 +6,5 @@ use Package\Entity\User;
 
 interface UserRepositoryInterface
 {
-    public function findUserById(string $id): ?User;
+    public function findById(string $id): ?User;
 }

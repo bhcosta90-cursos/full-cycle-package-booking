@@ -1,5 +1,5 @@
 {
-  "name": "bhcosta90/ms-fullcycle-api-catalog",
+  "name": "bhcosta90/package-booking",
   "autoload": {
     "psr-4": {
       "Package\\": "src/"
