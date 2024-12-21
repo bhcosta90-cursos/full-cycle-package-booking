@@ -4,7 +4,6 @@ namespace Package\Core\Entity;
 
 use Package\Core\Enum\BookingStatus;
 use Package\Core\Exception\EntityExpetion;
-use Package\Core\Factory\BcMathNumberFactory;
 use Package\Core\Factory\CalculateRefundFactory;
 use Package\Core\ValueObject\DateRange;
 
@@ -20,6 +19,8 @@ class Booking
         readonly protected(set) User $user,
         readonly protected(set) DateRange $dateRange,
         readonly protected(set) int $guestCount,
+        readonly protected(set) string $hourFinish = '14:00',
+        readonly protected(set) int $daysCanceled = 7
     )
     {
         $this->validate();
@@ -55,33 +56,13 @@ class Booking
 
         $diff = $checkingDate->diff($dateCancel);
 
-        $this->total = CalculateRefundFactory::handle($diff->days)->calculateRefund($this->total);
+        $this->total = CalculateRefundFactory::handle($this->daysCanceled, $diff->days)->calculateRefund($this->total);
         $this->status = BookingStatus::CANCELED;
     }
 
     public function isCanceled(): bool
     {
         return $this->status === BookingStatus::CANCELED;
-    }
-
-    public function checkout(\DateTime $dateCancel): ?float
-    {
-        $checkingDate = $this->dateRange->end;
-
-        if ($dateCancel > $checkingDate) {
-            $dateCancel->add(new \DateInterval('P1D'));
-            $valuePrice = $this->property->calculateTotalPrice(new DateRange($this->dateRange->start, $dateCancel));
-            return BcMathNumberFactory::create($valuePrice)->sub($this->total)->toFloat();
-        }
-
-        $this->status = BookingStatus::COMPLETED;
-
-        return null;
-    }
-
-    public function isCompleted(): bool
-    {
-        return $this->status === BookingStatus::COMPLETED;
     }
 
     public function getTotalPrice(): float

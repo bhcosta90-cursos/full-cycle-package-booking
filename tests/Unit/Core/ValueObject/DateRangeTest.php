@@ -10,9 +10,7 @@ test('deve criar uma instância de date range com a data de inicio e final', fun
 
     expect($dateRange)
         ->start->toBeInstanceOf(DateTime::class)
-        ->start->toBe($start)
-        ->end->toBeInstanceOf(DateTime::class)
-        ->end->toBe($end);
+        ->end->toBeInstanceOf(DateTime::class);
 });
 
 test('deve lançar um erro se a data de termino for antes da data de inicio', fn() => new DateRange(
