@@ -86,3 +86,15 @@ it('deve lançar um erro se acaso o usuário não existe', function () {
         ->isConfirmed()->toBeTrue()
         ->getTotalPrice()->toBe(1620.0);
 })->throws('Usuário não existe');
+
+it('deve lançar erro ao tentar criar um reserva com o período já reservado', function () {
+    $input = new BookingCreateInput(
+        propertyId: 'fulano',
+        guestId: 'fake',
+        start: new DateTime('2021-10-01'),
+        end: new DateTime('2021-10-10'),
+        guest: 1,
+    );
+
+    $this->service->createBooking($input);
+})->todo('Implementar a validação de período reservado');
