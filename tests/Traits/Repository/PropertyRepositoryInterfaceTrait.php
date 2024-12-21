@@ -10,25 +10,28 @@ trait PropertyRepositoryInterfaceTrait
 {
     protected PropertyRepositoryInterface|Mockery\MockInterface|null $mockPropertyRepository = null;
 
-    public function findPropertyRepositoryInterface(): self
-    {
+    public function findPropertyRepositoryInterface(
+        int $maxGuests = 5,
+        float $basePriceByNight = 150,
+        float $basePriceByGuests = 50,
+        float $percentagePriceConfirmation = 0.0,
+    ): self {
         $mockPropertyRepository = $this->mockPropertyRepositoryInterface();
         $mockPropertyRepository
             ->shouldReceive('findById')
             ->with("fulano")
+            ->between(0, 1)
             ->andReturn(
-                new Property(
-                    id: "fulano",
-                    title: 'Fulano',
-                    description: 'Descrição do Fulano',
-                    maxGuests: 5,
-                    basePriceByNight: 150,
-                    basePriceByGuests: 50,
-                    percentagePriceConfirmation: 0.0,
+                $this->getEntityProperty(
+                    $maxGuests,
+                    $basePriceByNight,
+                    $basePriceByGuests,
+                    $percentagePriceConfirmation,
                 ),
             );
         $mockPropertyRepository
             ->shouldReceive('findById')
+            ->between(0, 1)
             ->with("fake")
             ->andReturn(null);
 
@@ -42,6 +45,23 @@ trait PropertyRepositoryInterfaceTrait
         }
 
         return $this->mockPropertyRepository;
+    }
+
+    public function getEntityProperty(
+        int $maxGuests = 5,
+        float $basePriceByNight = 150,
+        float $basePriceByGuests = 50,
+        float $percentagePriceConfirmation = 0.0,
+    ): Property {
+        return new Property(
+            id: "fulano",
+            title: 'Fulano',
+            description: 'Descrição do Fulano',
+            maxGuests: $maxGuests,
+            basePriceByNight: $basePriceByNight,
+            basePriceByGuests: $basePriceByGuests,
+            percentagePriceConfirmation: $percentagePriceConfirmation,
+        );
     }
 
     public function getMockPropertyRepositoryInterface(): PropertyRepositoryInterface|Mockery\MockInterface

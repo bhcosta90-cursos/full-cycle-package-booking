@@ -1,13 +1,12 @@
 <?php
 
-namespace Package\DTO\Booking;
+namespace Package\DTO\Booking\Create;
 
 use DateTime;
 
-readonly class BookingOutput
+readonly class BookingCreateInput
 {
     public function __construct(
-        public string $bookingId,
         public string $propertyId,
         public string $guestId,
         public DateTime $start,

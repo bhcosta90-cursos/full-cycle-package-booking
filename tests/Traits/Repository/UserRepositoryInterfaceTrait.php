@@ -15,10 +15,13 @@ trait UserRepositoryInterfaceTrait
         $mockUserRepository = $this->mockUserRepositoryInterface();
         $mockUserRepository
             ->shouldReceive('findById')
+            ->between(0, 1)
             ->with("fulano")
-            ->andReturn(new User(id: "fulano", name: 'Fulano'));
+            ->andReturn($this->getEntityUser());
+
         $mockUserRepository
             ->shouldReceive('findById')
+            ->between(0, 1)
             ->with("fake")
             ->andReturn(null);
 
@@ -32,6 +35,11 @@ trait UserRepositoryInterfaceTrait
         }
 
         return $this->mockUserRepository;
+    }
+
+    public function getEntityUser(): User
+    {
+        return new User(id: "fulano", name: 'Fulano');
     }
 
     public function getMockUserRepositoryInterface(): UserRepositoryInterface|Mockery\MockInterface
