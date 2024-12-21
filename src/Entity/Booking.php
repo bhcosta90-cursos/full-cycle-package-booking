@@ -80,7 +80,7 @@ class Booking
     {
         $this->payments[] = $payment;
 
-        $totalPayments = array_sum(array_map(fn($payment) => $payment->amount, $this->payments));
+        $totalPayments = $this->getTotalPayments();
 
 
         $checkinValue = BcMathNumberFactory::create($this->getTotalPrice())
@@ -92,6 +92,11 @@ class Booking
         if ($totalPayments >= $checkinValue) {
             $this->status = BookingStatus::Confirmed;
         }
+    }
+
+    public function getTotalPayments(): float
+    {
+        return array_sum(array_map(fn($payment) => $payment->amount, $this->payments));
     }
 
     public function getTotalPrice(): float

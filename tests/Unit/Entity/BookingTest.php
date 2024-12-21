@@ -76,7 +76,9 @@ test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', f
         amount: 10
     ));
 
-    expect($booking)->isConfirmed()->toBeFalse();
+    expect($booking)
+        ->isConfirmed()->toBeFalse()
+        ->getTotalPayments()->toBe(10.0);
 
     $booking->addPayment(new Payment(
         type: PaymentType::CheckinValue,
@@ -84,7 +86,8 @@ test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', f
         amount: 50
     ));
 
-    expect($booking)->isConfirmed()->toBeTrue();
+    expect($booking)->isConfirmed()->toBeTrue()
+        ->getTotalPayments()->toBe(60.0);
 
 });
 
@@ -121,7 +124,8 @@ test('estou dando o valor mínimo de entrada para poder confirmar o agendamento'
         amount: 52.12
     ));
 
-    expect($booking)->isConfirmed()->toBeTrue();
+    expect($booking)->isConfirmed()->toBeTrue()
+        ->getTotalPayments()->toBe(52.12);
 });
 
 
