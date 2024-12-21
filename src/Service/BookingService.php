@@ -2,6 +2,7 @@
 
 namespace Package\Service;
 
+use DateTime;
 use Package\DTO\Booking\Create\BookingCreateInput;
 use Package\Entity\Booking;
 use Package\Exception\ServiceException;
@@ -51,5 +52,16 @@ class BookingService
     public function findById(string $id): ?Booking
     {
         return $this->bookingRepository->findById($id);
+    }
+
+    public function cancelBooking(string $id, ?DateTime $cancelDateTime = null): void
+    {
+        if (!$booking = $this->bookingRepository->findById($id)) {
+            throw new ServiceException('Reserva não existe');
+        }
+
+        $booking->cancel($cancelDateTime ?: new DateTime());
+
+        $this->bookingRepository->save($booking);
     }
 }

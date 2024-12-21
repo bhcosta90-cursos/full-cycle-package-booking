@@ -98,3 +98,11 @@ it('deve lançar erro ao tentar criar um reserva com o período já reservado', 
 
     $this->service->createBooking($input);
 })->todo('Implementar a validação de período reservado');
+
+it('deve conseguir cancelar uma reserva', function () {
+    $this->service->cancelBooking("fulano");
+});
+
+it('não devo conseguir cancelar uma reserva que não existe', function () {
+    $this->service->cancelBooking("fake");
+})->throws('Reserva não existe');
