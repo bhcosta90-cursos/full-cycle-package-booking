@@ -1,0 +1,27 @@
+{
+  "name": "bhcosta90/ms-fullcycle-api-catalog",
+  "autoload": {
+    "psr-4": {
+      "Package\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Bruno Costa",
+      "email": "bhcosta90@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.4",
+    "webit/bcmath": "^2.0"
+  },
+  "require-dev": {
+    "pestphp/pest": "*",
+    "symfony/var-dumper": "^7.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
