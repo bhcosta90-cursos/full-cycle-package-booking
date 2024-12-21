@@ -1,10 +1,10 @@
 <?php
 
-namespace Package\Core\Entity;
+namespace Package\Entity;
 
-use Package\Core\Exception\EntityExpetion;
-use Package\Core\Factory\BcMathNumberFactory;
-use Package\Core\ValueObject\DateRange;
+use Package\Exception\EntityExpetion;
+use Package\Factory\BcMathNumberFactory;
+use Package\ValueObject\DateRange;
 
 class Property
 {

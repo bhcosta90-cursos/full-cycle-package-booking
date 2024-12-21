@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\Core\ValueObject;
+namespace Package\ValueObject;
 
 use DateTime;
 use InvalidArgumentException;

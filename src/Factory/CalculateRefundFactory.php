@@ -1,11 +1,11 @@
 <?php
 
-namespace Package\Core\Factory;
+namespace Package\Factory;
 
-use Package\Core\Cancellation\FullRefund;
-use Package\Core\Cancellation\NoRefund;
-use Package\Core\Cancellation\PartialRefund;
-use Package\Core\Cancellation\RefundRule;
+use Package\Cancellation\FullRefund;
+use Package\Cancellation\NoRefund;
+use Package\Cancellation\PartialRefund;
+use Package\Cancellation\RefundRule;
 
 class CalculateRefundFactory
 {

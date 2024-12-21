@@ -1,11 +1,11 @@
 <?php
 
-namespace Package\Core\Entity;
+namespace Package\Entity;
 
-use Package\Core\Enum\BookingStatus;
-use Package\Core\Exception\EntityExpetion;
-use Package\Core\Factory\CalculateRefundFactory;
-use Package\Core\ValueObject\DateRange;
+use Package\Enum\BookingStatus;
+use Package\Exception\EntityExpetion;
+use Package\Factory\CalculateRefundFactory;
+use Package\ValueObject\DateRange;
 
 class Booking
 {

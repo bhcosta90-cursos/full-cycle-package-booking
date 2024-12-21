@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\Core\Cancellation;
+namespace Package\Cancellation;
 
 interface RefundRule
 {

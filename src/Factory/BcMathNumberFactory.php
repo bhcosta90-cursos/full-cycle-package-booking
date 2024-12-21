@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\Core\Factory;
+namespace Package\Factory;
 
 use Webit\Wrapper\BcMath\BcMathNumber;
 

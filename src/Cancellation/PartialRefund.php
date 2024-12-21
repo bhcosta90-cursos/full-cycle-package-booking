@@ -1,8 +1,8 @@
 <?php
 
-namespace Package\Core\Cancellation;
+namespace Package\Cancellation;
 
-use Package\Core\Factory\BcMathNumberFactory;
+use Package\Factory\BcMathNumberFactory;
 
 class PartialRefund implements RefundRule
 {

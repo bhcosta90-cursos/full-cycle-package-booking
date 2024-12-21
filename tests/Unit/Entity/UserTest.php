@@ -1,6 +1,6 @@
 <?php
 
-use Package\Core\Entity\User;
+use Package\Entity\User;
 
 test('deve criar uma instância de date range com a data de inicio e final', function () {
     $user = new User(

@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\Core\Enum;
+namespace Package\Enum;
 
 enum BookingStatus: int
 {

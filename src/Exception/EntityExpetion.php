@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\Core\Exception;
+namespace Package\Exception;
 
 class EntityExpetion extends \Exception
 {

@@ -1,9 +1,9 @@
 <?php
 
-use Package\Core\Entity\Booking;
-use Package\Core\Entity\Property;
-use Package\Core\Entity\User;
-use Package\Core\ValueObject\DateRange;
+use Package\Entity\Booking;
+use Package\Entity\Property;
+use Package\Entity\User;
+use Package\ValueObject\DateRange;
 
 beforeEach(function () {
     $this->property = new Property(

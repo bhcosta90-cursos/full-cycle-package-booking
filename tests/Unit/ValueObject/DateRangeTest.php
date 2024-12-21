@@ -1,6 +1,6 @@
 <?php
 
-use Package\Core\ValueObject\DateRange;
+use Package\ValueObject\DateRange;
 
 test('deve criar uma instância de date range com a data de inicio e final', function () {
     $dateRange = new DateRange(

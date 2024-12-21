@@ -1,8 +1,8 @@
 <?php
 
-namespace Package\Core\Entity;
+namespace Package\Entity;
 
-use Package\Core\Exception\EntityExpetion;
+use Package\Exception\EntityExpetion;
 
 readonly class User
 {
