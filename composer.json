@@ -18,7 +18,8 @@
   ],
   "require": {
     "php": "^8.4",
-    "webit/bcmath": "^2.0"
+    "webit/bcmath": "^2.0",
+    "ramsey/uuid": "^4.7"
   },
   "require-dev": {
     "pestphp/pest": "*",
