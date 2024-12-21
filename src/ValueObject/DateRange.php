@@ -10,8 +10,7 @@ class DateRange
     public function __construct(
         private(set) DateTime $start,
         private(set) DateTime $end,
-    )
-    {
+    ) {
         $this->start = new DateTime($start->format('Y-m-d') . ' 00:00:00');
         $this->end = new DateTime($end->format('Y-m-d') . '14:00:59');
 

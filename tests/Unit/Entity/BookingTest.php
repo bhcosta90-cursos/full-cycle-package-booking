@@ -39,7 +39,8 @@ test('deve criar uma instância de propriedade com todos os atributos', function
         ->property->title->toBe('Casa de praia')
         ->user->name->toBe('Fulano')
         ->dateRange->toBeInstanceOf(DateRange::class)
-        ->guestCount->toBe(2)
+        ->guestCount
+        ->toBe(2)
         ->isConfirmed()->toBeTrue();
 });
 
@@ -67,28 +68,33 @@ test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', f
         ->property->title->toBe('Casa de praia com valor de entrada')
         ->user->name->toBe('Fulano')
         ->dateRange->toBeInstanceOf(DateRange::class)
-        ->guestCount->toBe(2)
+        ->guestCount
+        ->toBe(2)
         ->isConfirmed()->toBeFalse();
 
-    $booking->addPayment(new Payment(
-        type: PaymentType::CheckinValue,
-        method: PaymentMethod::Pix,
-        amount: 10
-    ));
+    $booking->addPayment(
+        new Payment(
+            type: PaymentType::CheckinValue,
+            method: PaymentMethod::Pix,
+            amount: 10,
+        ),
+    );
 
     expect($booking)
         ->isConfirmed()->toBeFalse()
         ->getTotalPayments()->toBe(10.0);
 
-    $booking->addPayment(new Payment(
-        type: PaymentType::CheckinValue,
-        method: PaymentMethod::Pix,
-        amount: 50
-    ));
+    $booking->addPayment(
+        new Payment(
+            type: PaymentType::CheckinValue,
+            method: PaymentMethod::Pix,
+            amount: 50,
+        ),
+    );
 
-    expect($booking)->isConfirmed()->toBeTrue()
+    expect($booking)
+        ->isConfirmed()->toBeTrue()
         ->getTotalPayments()->toBe(60.0);
-
 });
 
 test('estou dando o valor mínimo de entrada para poder confirmar o agendamento', function () {
@@ -115,16 +121,20 @@ test('estou dando o valor mínimo de entrada para poder confirmar o agendamento'
         ->property->title->toBe('Casa de praia com valor de entrada 02')
         ->user->name->toBe('Fulano')
         ->dateRange->toBeInstanceOf(DateRange::class)
-        ->guestCount->toBe(2)
+        ->guestCount
+        ->toBe(2)
         ->isConfirmed()->toBeFalse();
 
-    $booking->addPayment(new Payment(
-        type: PaymentType::CheckinValue,
-        method: PaymentMethod::Pix,
-        amount: 52.12
-    ));
+    $booking->addPayment(
+        new Payment(
+            type: PaymentType::CheckinValue,
+            method: PaymentMethod::Pix,
+            amount: 52.12,
+        ),
+    );
 
-    expect($booking)->isConfirmed()->toBeTrue()
+    expect($booking)
+        ->isConfirmed()->toBeTrue()
         ->getTotalPayments()->toBe(52.12);
 });
 
@@ -219,7 +229,8 @@ it('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', funct
 
     $booking->cancel(new DateTime('2020-01-01'));
 
-    expect($booking)->isCanceled()->toBeTrue()
+    expect($booking)
+        ->isCanceled()->toBeTrue()
         ->getTotalPrice()->toBe(0.0);
 });
 
@@ -247,37 +258,42 @@ it('deve cancelar uma reserva com o reembolso total quando a data for superior a
 
     $booking->cancel(new DateTime('2019-12-24'));
 
-    expect($booking)->isCanceled()->toBeTrue()
+    expect($booking)
+        ->isCanceled()->toBeTrue()
         ->getTotalPrice()->toBe(300.0);
 });
 
-it('deve cancelar uma reserva com o reembolso parcial quando a data for inferior a 7 dias antes da entrada', function () {
-    $property = new Property(
-        id: '1',
-        title: 'Casa de praia',
-        description: 'Casa de praia com 3 quartos',
-        maxGuests: 4,
-        basePriceByNight: 100,
-    );
+it(
+    'deve cancelar uma reserva com o reembolso parcial quando a data for inferior a 7 dias antes da entrada',
+    function () {
+        $property = new Property(
+            id: '1',
+            title: 'Casa de praia',
+            description: 'Casa de praia com 3 quartos',
+            maxGuests: 4,
+            basePriceByNight: 100,
+        );
 
-    $dateRange = new DateRange(
-        start: new DateTime('2020-01-01'),
-        end: new DateTime('2020-01-04'),
-    );
+        $dateRange = new DateRange(
+            start: new DateTime('2020-01-01'),
+            end: new DateTime('2020-01-04'),
+        );
 
-    $booking = new Booking(
-        id: '1',
-        property: $property,
-        user: $this->user,
-        dateRange: $dateRange,
-        guestCount: $property->maxGuests,
-    );
+        $booking = new Booking(
+            id: '1',
+            property: $property,
+            user: $this->user,
+            dateRange: $dateRange,
+            guestCount: $property->maxGuests,
+        );
 
-    $booking->cancel(new DateTime('2019-12-31'));
+        $booking->cancel(new DateTime('2019-12-31'));
 
-    expect($booking)->isCanceled()->toBeTrue()
-        ->getTotalPrice()->toBe(150.0);
-});
+        expect($booking)
+            ->isCanceled()->toBeTrue()
+            ->getTotalPrice()->toBe(150.0);
+    },
+);
 
 it('não pode cancelar a mesma reserva', function () {
     $property = new Property(

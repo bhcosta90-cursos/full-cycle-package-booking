@@ -11,7 +11,5 @@ class Payment
         protected(set) PaymentType $type,
         protected(set) PaymentMethod $method,
         protected(set) float $amount,
-    )
-    {
-    }
+    ) {}
 }

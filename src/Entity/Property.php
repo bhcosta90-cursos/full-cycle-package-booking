@@ -20,8 +20,7 @@ class Property
         readonly protected(set) float $basePriceByNight,
         readonly protected(set) float $basePriceByGuests = 0,
         readonly protected(set) float $percentagePriceConfirmation = 0,
-    )
-    {
+    ) {
         $this->validate();
     }
 
@@ -75,11 +74,9 @@ class Property
 
     public function isAvailable(DateRange $dateRange): bool
     {
-
         return array_all(
             $this->bookings,
-            fn(Booking $booking) => !$booking->isConfirmed() || !$booking->dateRange->overlaps($dateRange)
+            fn(Booking $booking) => !$booking->isConfirmed() || !$booking->dateRange->overlaps($dateRange),
         );
-
     }
 }

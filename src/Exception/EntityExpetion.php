@@ -2,7 +2,4 @@
 
 namespace Package\Exception;
 
-class EntityExpetion extends \Exception
-{
-
-}
+class EntityExpetion extends \Exception {}

@@ -9,8 +9,7 @@ readonly class User
     public function __construct(
         private(set) string $id,
         private(set) string $name,
-    )
-    {
+    ) {
         $this->validate($id, $name);
     }
 

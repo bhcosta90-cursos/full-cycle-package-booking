@@ -97,6 +97,7 @@ test('deve verificar disponibilidade da propriedade', function () {
         guestCount: 2,
     );
 
-    expect($this->property->isAvailable($dateRange))->toBeFalse()
+    expect($this->property->isAvailable($dateRange))
+        ->toBeFalse()
         ->and($this->property->isAvailable($dateRange2))->toBeFalse();
 });
