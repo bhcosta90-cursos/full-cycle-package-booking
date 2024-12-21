@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\Entity;
+namespace Package\ValueObject;
 
 use Package\Enum\PaymentMethod;
 use Package\Enum\PaymentType;

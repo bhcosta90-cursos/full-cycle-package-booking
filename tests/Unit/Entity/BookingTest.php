@@ -3,10 +3,18 @@
 use Package\Entity\Booking;
 use Package\Entity\Property;
 use Package\Entity\User;
+use Package\Enum\PaymentMethod;
+use Package\Enum\PaymentType;
 use Package\ValueObject\DateRange;
+use Package\ValueObject\Payment;
 
 beforeEach(function () {
     $this->user = new User(id: '1', name: 'Fulano');
+
+    $this->dateRange = new DateRange(
+        start: new DateTime('2020-01-01'),
+        end: new DateTime('2020-01-05'),
+    );
 
     $this->property = new Property(
         id: '1',
@@ -14,11 +22,6 @@ beforeEach(function () {
         description: 'Casa de praia com 3 quartos',
         maxGuests: 4,
         basePriceByNight: 130.32,
-    );
-
-    $this->dateRange = new DateRange(
-        start: new DateTime('2020-01-01'),
-        end: new DateTime('2020-01-05'),
     );
 
     $this->booking = new Booking(
@@ -36,7 +39,89 @@ test('deve criar uma instância de propriedade com todos os atributos', function
         ->property->title->toBe('Casa de praia')
         ->user->name->toBe('Fulano')
         ->dateRange->toBeInstanceOf(DateRange::class)
-        ->guestCount->toBe(2);
+        ->guestCount->toBe(2)
+        ->isConfirmed()->toBeTrue();
+});
+
+test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', function () {
+    $property = new Property(
+        id: '1',
+        title: 'Casa de praia com valor de entrada',
+        description: 'Casa de praia com 3 quartos',
+        maxGuests: 4,
+        basePriceByNight: 130.32,
+        percentagePriceConfirmation: 10,
+    );
+
+    $booking = new Booking(
+        id: '1',
+        property: $property,
+        user: $this->user,
+        dateRange: $this->dateRange,
+        guestCount: 2,
+    );
+
+
+    expect($booking)
+        ->id->toBe('1')
+        ->property->title->toBe('Casa de praia com valor de entrada')
+        ->user->name->toBe('Fulano')
+        ->dateRange->toBeInstanceOf(DateRange::class)
+        ->guestCount->toBe(2)
+        ->isConfirmed()->toBeFalse();
+
+    $booking->addPayment(new Payment(
+        type: PaymentType::CheckinValue,
+        method: PaymentMethod::Pix,
+        amount: 10
+    ));
+
+    expect($booking)->isConfirmed()->toBeFalse();
+
+    $booking->addPayment(new Payment(
+        type: PaymentType::CheckinValue,
+        method: PaymentMethod::Pix,
+        amount: 50
+    ));
+
+    expect($booking)->isConfirmed()->toBeTrue();
+
+});
+
+test('estou dando o valor mínimo de entrada para poder confirmar o agendamento', function () {
+    $property = new Property(
+        id: '1',
+        title: 'Casa de praia com valor de entrada 02',
+        description: 'Casa de praia com 3 quartos',
+        maxGuests: 4,
+        basePriceByNight: 130.32,
+        percentagePriceConfirmation: 10,
+    );
+
+    $booking = new Booking(
+        id: '1',
+        property: $property,
+        user: $this->user,
+        dateRange: $this->dateRange,
+        guestCount: 2,
+    );
+
+
+    expect($booking)
+        ->id->toBe('1')
+        ->property->title->toBe('Casa de praia com valor de entrada 02')
+        ->user->name->toBe('Fulano')
+        ->dateRange->toBeInstanceOf(DateRange::class)
+        ->guestCount->toBe(2)
+        ->isConfirmed()->toBeFalse();
+
+    $booking->addPayment(new Payment(
+        type: PaymentType::CheckinValue,
+        method: PaymentMethod::Pix,
+        amount: 52.12
+    ));
+
+    expect($booking)->isConfirmed()->toBeTrue();
 });
 
 
@@ -78,7 +163,7 @@ test('deve calcular o preço total com desconto', function () {
     expect($booking->getTotalPrice())->toBe(1055.59); // 130.32 * 9 * 0.9 = 1058.64
 });
 
-test('não deve realizar o agendamento quando uma propriedade não estiver disponível', function () {
+test('não deve realizar o agendamento quando uma propriedade se não estiver disponível', function () {
     $dateRange = new DateRange(
         start: new DateTime('2020-01-01'),
         end: new DateTime('2020-01-10'),

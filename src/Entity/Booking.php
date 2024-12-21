@@ -4,13 +4,15 @@ namespace Package\Entity;
 
 use Package\Enum\BookingStatus;
 use Package\Exception\EntityExpetion;
+use Package\Factory\BcMathNumberFactory;
 use Package\Factory\CalculateRefundFactory;
 use Package\ValueObject\DateRange;
+use Package\ValueObject\Payment;
 
 class Booking
 {
-    protected BookingStatus $status = BookingStatus::CONFIRMED;
-
+    protected array $payments = [];
+    protected ?BookingStatus $status = null;
     protected float $total;
 
     public function __construct(
@@ -19,8 +21,7 @@ class Booking
         readonly protected(set) User $user,
         readonly protected(set) DateRange $dateRange,
         readonly protected(set) int $guestCount,
-        readonly protected(set) string $hourFinish = '14:00',
-        readonly protected(set) int $daysCanceled = 7
+        readonly protected(set) int $daysCanceled = 7,
     )
     {
         $this->validate();
@@ -36,14 +37,20 @@ class Booking
 
         $this->property->validateMaxGuests($this->guestCount);
 
-        if (!$this->property->isAvailable($this->dateRange)) {
-            throw new EntityExpetion('A propriedade não está disponível para a data solicitadas.');
-        }
+        match ($this->property->percentagePriceConfirmation) {
+            0.0 => $this->status = BookingStatus::Confirmed,
+            default => $this->status = BookingStatus::Pending,
+        };
     }
 
     public function isConfirmed(): bool
     {
-        return $this->status === BookingStatus::CONFIRMED;
+        return $this->status === BookingStatus::Confirmed;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === BookingStatus::Pending;
     }
 
     public function cancel(\DateTime $dateCancel): void
@@ -57,12 +64,30 @@ class Booking
         $diff = $checkingDate->diff($dateCancel);
 
         $this->total = CalculateRefundFactory::handle($this->daysCanceled, $diff->days)->calculateRefund($this->total);
-        $this->status = BookingStatus::CANCELED;
+        $this->status = BookingStatus::Canceled;
     }
 
     public function isCanceled(): bool
     {
-        return $this->status === BookingStatus::CANCELED;
+        return $this->status === BookingStatus::Canceled;
+    }
+
+    public function addPayment(Payment $payment): void
+    {
+        $this->payments[] = $payment;
+
+        $totalPayments = array_sum(array_map(fn($payment) => $payment->amount, $this->payments));
+
+
+        $checkinValue = BcMathNumberFactory::create($this->getTotalPrice())
+            ->mul(100)
+            ->div($this->property->percentagePriceConfirmation)
+            ->div(100)
+            ->toFloat();
+
+        if ($totalPayments >= $checkinValue) {
+            $this->status = BookingStatus::Confirmed;
+        }
     }
 
     public function getTotalPrice(): float

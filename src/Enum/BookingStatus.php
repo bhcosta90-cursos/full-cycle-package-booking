@@ -4,7 +4,8 @@ namespace Package\Enum;
 
 enum BookingStatus: int
 {
-    case CONFIRMED = 1;
-    case CANCELED = 2;
-    case COMPLETED = 3;
+    case Confirmed = 1;
+    case Pending = 2;
+    case Canceled = 3;
+    case Completed = 4;
 }

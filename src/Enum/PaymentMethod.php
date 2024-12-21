@@ -2,8 +2,11 @@
 
 namespace Package\Enum;
 
-enum PaymentType: int
+enum PaymentMethod: int
 {
-    case InputValue = 1;
-    case CheckoutValue = 2;
+    case Cash = 1;
+    case Pix = 2;
+    case Money = 3;
+    case CreditCard = 4;
+    case DebitCard = 5;
 }
