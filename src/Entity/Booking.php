@@ -2,6 +2,7 @@
 
 namespace Package\Entity;
 
+use DateTime;
 use Package\Enum\BookingStatus;
 use Package\Exception\EntityExpetion;
 use Package\Factory\BcMathNumberFactory;
@@ -22,8 +23,7 @@ class Booking
         readonly protected(set) DateRange $dateRange,
         readonly protected(set) int $guestCount,
         readonly protected(set) int $daysCanceled = 7,
-    )
-    {
+    ) {
         $this->validate();
         $this->property->addBooking($this);
         $this->total = $this->property->calculateTotalPrice($this->dateRange);
@@ -52,12 +52,7 @@ class Booking
         return $this->status === BookingStatus::Confirmed;
     }
 
-    public function isPending(): bool
-    {
-        return $this->status === BookingStatus::Pending;
-    }
-
-    public function cancel(\DateTime $dateCancel): void
+    public function cancel(DateTime $dateCancel): void
     {
         if ($this->isCanceled()) {
             throw new EntityExpetion('A reserva já foi cancelada.');
