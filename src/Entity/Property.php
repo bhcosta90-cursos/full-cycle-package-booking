@@ -25,7 +25,7 @@ class Property
         $this->validate();
     }
 
-    protected function validate()
+    protected function validate(): void
     {
         if (empty(trim($this->title))) {
             throw new EntityExpetion('O título da propriedade não pode ser vázio');
