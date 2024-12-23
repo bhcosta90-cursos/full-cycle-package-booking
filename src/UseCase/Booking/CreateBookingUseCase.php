@@ -1,8 +1,7 @@
 <?php
 
-namespace Package\Service;
+namespace Package\UseCase\Booking;
 
-use DateTime;
 use Package\DTO\Booking\Create\BookingCreateInput;
 use Package\Entity\Booking;
 use Package\Exception\ServiceException;
@@ -12,7 +11,7 @@ use Package\Repository\PropertyRepositoryInterface;
 use Package\Repository\UserRepositoryInterface;
 use Ramsey\Uuid\Uuid;
 
-class BookingService
+class CreateBookingUseCase
 {
     public function __construct(
         protected PropertyRepositoryInterface $propertyRepository,
@@ -21,7 +20,7 @@ class BookingService
         protected DateRangeFactoryInterface $dateRangeFactory,
     ) {}
 
-    public function createBooking(BookingCreateInput $input): Booking
+    public function handle(BookingCreateInput $input): Booking
     {
         if (!$property = $this->propertyRepository->findById($input->propertyId)) {
             throw new ServiceException('Propriedade não existe');
@@ -47,21 +46,5 @@ class BookingService
         $this->bookingRepository->save($booking);
 
         return $booking;
-    }
-
-    public function findById(string $id): ?Booking
-    {
-        return $this->bookingRepository->findById($id);
-    }
-
-    public function cancelBooking(string $id, ?DateTime $cancelDateTime = null): void
-    {
-        if (!$booking = $this->bookingRepository->findById($id)) {
-            throw new ServiceException('Reserva não existe');
-        }
-
-        $booking->cancel($cancelDateTime ?: new DateTime());
-
-        $this->bookingRepository->save($booking);
     }
 }

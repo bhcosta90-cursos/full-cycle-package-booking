@@ -15,6 +15,7 @@ trait PropertyRepositoryInterfaceTrait
         float $basePriceByNight = 150,
         float $basePriceByGuests = 50,
         float $percentagePriceConfirmation = 0.0,
+        ?Property $property = null,
     ): self {
         $mockPropertyRepository = $this->mockPropertyRepositoryInterface();
         $mockPropertyRepository
@@ -22,7 +23,7 @@ trait PropertyRepositoryInterfaceTrait
             ->with("fulano")
             ->between(0, 1)
             ->andReturn(
-                $this->getEntityProperty(
+                $property ?: $this->getEntityProperty(
                     $maxGuests,
                     $basePriceByNight,
                     $basePriceByGuests,
@@ -53,15 +54,36 @@ trait PropertyRepositoryInterfaceTrait
         float $basePriceByGuests = 50,
         float $percentagePriceConfirmation = 0.0,
     ): Property {
-        return new Property(
-            id: "fulano",
-            title: 'Fulano',
-            description: 'Descrição do Fulano',
-            maxGuests: $maxGuests,
-            basePriceByNight: $basePriceByNight,
-            basePriceByGuests: $basePriceByGuests,
-            percentagePriceConfirmation: $percentagePriceConfirmation,
+        $mock = $this->getEntityPropertyBlank(
+            $maxGuests,
+            $basePriceByNight,
+            $basePriceByGuests,
+            $percentagePriceConfirmation,
         );
+
+        $mock->shouldReceive('validateMaxGuests');
+        $mock->shouldReceive('addBooking');
+        $mock->shouldReceive('calculateTotalPrice')->andReturn(1620.0);
+        $mock->shouldReceive('isAvailable')->andReturnTrue();
+
+        return $mock;
+    }
+
+    public function getEntityPropertyBlank(
+        int $maxGuests = 5,
+        float $basePriceByNight = 150,
+        float $basePriceByGuests = 50,
+        float $percentagePriceConfirmation = 0.0,
+    ): Property|Mockery\MockInterface {
+        return Mockery::mock(Property::class, [
+            "fulano",
+            'Fulano',
+            'Descrição do Fulano',
+            $maxGuests,
+            $basePriceByNight,
+            $basePriceByGuests,
+            $percentagePriceConfirmation,
+        ]);
     }
 
     public function getMockPropertyRepositoryInterface(): PropertyRepositoryInterface|Mockery\MockInterface

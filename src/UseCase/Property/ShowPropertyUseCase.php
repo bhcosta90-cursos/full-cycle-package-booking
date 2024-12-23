@@ -1,17 +1,17 @@
 <?php
 
-namespace Package\Service;
+namespace Package\UseCase\Property;
 
 use Package\Entity\Property;
 use Package\Repository\PropertyRepositoryInterface;
 
-class PropertyService
+class ShowPropertyUseCase
 {
     public function __construct(
         protected PropertyRepositoryInterface $propertyRepository,
     ) {}
 
-    public function findById(string $id): ?Property
+    public function handle(string $id): ?Property
     {
         return $this->propertyRepository->findById($id);
     }

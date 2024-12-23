@@ -10,7 +10,7 @@ class Property
 {
     const int TOTAL_NIGHTS_DISCOUNT_7 = 10;
 
-    protected(set) array $bookings = [];
+    private array $bookings = [];
 
     public function __construct(
         readonly protected(set) string $id,

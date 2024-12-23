@@ -73,20 +73,25 @@ trait BookingRepositoryInterfaceTrait
                 return $booking->property->title === 'Fulano'
                     && $booking->user->name === 'Fulano';
             })
-            ->andReturn(
-                new Booking(
-                    id: "fulano",
-                    property: $property ?: $this->getEntityProperty(),
-                    user: $user ?: $this->getEntityUser(),
-                    dateRange: new DateRange(
-                        start: new DateTime('2020-01-01'),
-                        end: new DateTime('2020-01-05'),
-                    ),
-                    guestCount: 2,
-                ),
-            );
+            ->andReturn($this->mockEntityBooking($property, $user));
 
         return $this;
+    }
+
+    public function mockEntityBooking(
+        ?Property $property = null,
+        ?User $user = null,
+    ): Booking {
+        return Mockery::mock(Booking:: class, [
+            "fulano",
+            $property ?: $this->getEntityProperty(),
+            $user ?: $this->getEntityUser(),
+            new DateRange(
+                start: new DateTime('2020-01-01'),
+                end: new DateTime('2020-01-05'),
+            ),
+            2,
+        ]);
     }
 
     public function getMockBookingRepositoryInterface(): BookingRepositoryInterface|Mockery\MockInterface
