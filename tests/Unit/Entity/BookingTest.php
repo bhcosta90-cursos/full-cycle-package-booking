@@ -9,7 +9,7 @@ use Package\ValueObject\DateRange;
 use Package\ValueObject\Payment;
 
 beforeEach(function () {
-    $this->user = new User(id: '1', name: 'Fulano');
+    $this->user = new User(id: '1', name: 'Fulano', email: 'test@example.com');
 
     $this->dateRange = new DateRange(
         start: new DateTime('2020-01-01'),

@@ -39,7 +39,7 @@ trait UserRepositoryInterfaceTrait
 
     public function getEntityUser(): User
     {
-        return new User(id: "fulano", name: 'Fulano');
+        return new User(id: "fulano", name: 'Fulano', email: "test@example.com");
     }
 
     public function getMockUserRepositoryInterface(): UserRepositoryInterface|Mockery\MockInterface

@@ -77,7 +77,7 @@ test('deve aplicar desconto para estadia 7 noites ou mais', function () {
 });
 
 test('deve verificar disponibilidade da propriedade', function () {
-    $user = new User(id: '1', name: 'Fulano');
+    $user = new User(id: '1', name: 'Fulano', email: 'test@example.com');
 
     $dateRange = new DateRange(
         start: new DateTime('2020-01-01'),
