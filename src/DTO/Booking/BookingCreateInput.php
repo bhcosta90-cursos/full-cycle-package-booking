@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\DTO\Booking\Create;
+namespace Package\DTO\Booking;
 
 use DateTime;
 

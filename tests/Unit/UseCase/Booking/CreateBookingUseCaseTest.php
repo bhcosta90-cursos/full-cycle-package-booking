@@ -1,6 +1,6 @@
 <?php
 
-use Package\DTO\Booking\Create\BookingCreateInput;
+use Package\DTO\Booking\BookingCreateInput;
 use Package\Entity\Booking;
 use Package\Factory\DateRangeFactoryInterface;
 use Package\UseCase\Booking\CreateBookingUseCase;

@@ -2,7 +2,7 @@
 
 namespace Package\UseCase\Booking;
 
-use Package\DTO\Booking\Create\BookingCreateInput;
+use Package\DTO\Booking\BookingCreateInput;
 use Package\Entity\Booking;
 use Package\Exception\ServiceException;
 use Package\Factory\DateRangeFactoryInterface;
