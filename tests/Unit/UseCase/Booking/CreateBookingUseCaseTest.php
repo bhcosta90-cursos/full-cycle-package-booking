@@ -43,6 +43,7 @@ it('deve criar uma reserva com sucesso', function () {
         start: new DateTime('2021-10-01'),
         end: new DateTime('2021-10-10'),
         guest: 1,
+        daysCancelled: 7,
     );
 
     $result = $useCase->handle($input);
@@ -74,6 +75,7 @@ it('deve lançar um erro se acaso a propriedade não existe', function () {
         start: new DateTime('2021-10-01'),
         end: new DateTime('2021-10-10'),
         guest: 1,
+        daysCancelled: 7,
     );
 
     $result = $useCase->handle($input);
@@ -105,6 +107,7 @@ it('deve lançar um erro se acaso o usuário não existe', function () {
         start: new DateTime('2021-10-01'),
         end: new DateTime('2021-10-10'),
         guest: 1,
+        daysCancelled: 7,
     );
 
     $result = $useCase->handle($input);
@@ -142,6 +145,7 @@ it('deve lançar erro ao tentar criar um reserva com o período já reservado', 
         start: new DateTime('2021-10-01'),
         end: new DateTime('2021-10-10'),
         guest: 1,
+        daysCancelled: 7,
     );
 
     $useCase->handle($input);

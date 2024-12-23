@@ -36,11 +36,12 @@ class CreateBookingUseCase
         );
 
         $booking = new Booking(
-            id: (string)Uuid::uuid4(),
+            id: (string) Uuid::uuid4(),
             property: $property,
             user: $user,
             dateRange: $dateRange,
             guestCount: $input->guest,
+            daysCanceled: $input->daysCancelled,
         );
 
         $this->bookingRepository->save($booking);

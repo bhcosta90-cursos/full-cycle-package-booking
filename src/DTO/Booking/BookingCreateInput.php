@@ -12,5 +12,6 @@ readonly class BookingCreateInput
         public DateTime $start,
         public DateTime $end,
         public int $guest,
+        public int $daysCancelled,
     ) {}
 }

@@ -95,6 +95,7 @@ test('deve verificar disponibilidade da propriedade', function () {
         user: $user,
         dateRange: $dateRange,
         guestCount: 2,
+        daysCanceled: 7,
     );
 
     expect($this->property->isAvailable($dateRange))

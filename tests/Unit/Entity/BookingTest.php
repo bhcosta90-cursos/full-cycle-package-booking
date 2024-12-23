@@ -30,6 +30,7 @@ beforeEach(function () {
         user: $this->user,
         dateRange: $this->dateRange,
         guestCount: 2,
+        daysCanceled: 7,
     );
 });
 
@@ -60,6 +61,7 @@ test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', f
         user: $this->user,
         dateRange: $this->dateRange,
         guestCount: 2,
+        daysCanceled: 7,
     );
 
 
@@ -113,6 +115,7 @@ test('estou dando o valor mínimo de entrada para poder confirmar o agendamento'
         user: $this->user,
         dateRange: $this->dateRange,
         guestCount: 2,
+        daysCanceled: 7,
     );
 
 
@@ -146,6 +149,7 @@ test('deve lançar o erro se o número de hospedes for menor que zero', function
         user: $this->user,
         dateRange: $this->dateRange,
         guestCount: 0,
+        daysCanceled: 7,
     );
 })->throws('O número de hospedes deve ser maior que zero');
 
@@ -157,6 +161,7 @@ test('deve lançar o erro se o número de hospedes exceder', function () {
         user: $this->user,
         dateRange: $this->dateRange,
         guestCount: $this->property->maxGuests + 1,
+        daysCanceled: 7,
     );
 })->throws('Número máximo de hóspedes excedido. O limite é de 4.');
 
@@ -172,6 +177,7 @@ test('deve calcular o preço total com desconto', function () {
         user: $this->user,
         dateRange: $dateRange,
         guestCount: $this->property->maxGuests,
+        daysCanceled: 7,
     );
 
     expect($booking->getTotalPrice())->toBe(1055.59); // 130.32 * 9 * 0.9 = 1058.64
@@ -194,6 +200,7 @@ test('não deve realizar o agendamento quando uma propriedade se não estiver di
         user: $this->user,
         dateRange: $dateRange,
         guestCount: $this->property->maxGuests,
+        daysCanceled: 7,
     );
 
     new Booking(
@@ -202,6 +209,7 @@ test('não deve realizar o agendamento quando uma propriedade se não estiver di
         user: $this->user,
         dateRange: $dateRange2,
         guestCount: $this->property->maxGuests,
+        daysCanceled: 7,
     );
 })->throws('A propriedade não está disponível para a data solicitadas.');
 
@@ -225,6 +233,7 @@ it('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', funct
         user: $this->user,
         dateRange: $dateRange,
         guestCount: $property->maxGuests,
+        daysCanceled: 7,
     );
 
     $booking->cancel(new DateTime('2020-01-01'));
@@ -254,6 +263,7 @@ it('deve cancelar uma reserva com o reembolso total quando a data for superior a
         user: $this->user,
         dateRange: $dateRange,
         guestCount: $property->maxGuests,
+        daysCanceled: 7,
     );
 
     $booking->cancel(new DateTime('2019-12-24'));
@@ -285,6 +295,7 @@ it(
             user: $this->user,
             dateRange: $dateRange,
             guestCount: $property->maxGuests,
+            daysCanceled: 7,
         );
 
         $booking->cancel(new DateTime('2019-12-31'));
@@ -315,6 +326,7 @@ it('não pode cancelar a mesma reserva', function () {
         user: $this->user,
         dateRange: $dateRange,
         guestCount: $property->maxGuests,
+        daysCanceled: 7,
     );
 
     $booking->cancel(new DateTime('2019-12-31'));

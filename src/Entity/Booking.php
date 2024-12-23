@@ -22,7 +22,7 @@ class Booking
         readonly protected(set) User $user,
         readonly protected(set) DateRange $dateRange,
         readonly protected(set) int $guestCount,
-        readonly protected(set) int $daysCanceled = 7,
+        readonly protected(set) int $daysCanceled,
     ) {
         $this->validate();
         $this->property->addBooking($this);

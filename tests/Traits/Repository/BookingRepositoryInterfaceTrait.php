@@ -41,6 +41,7 @@ trait BookingRepositoryInterfaceTrait
                     user: $user ?: $this->getEntityUser(),
                     dateRange: $dateRange,
                     guestCount: 2,
+                    daysCanceled: 7,
                 ),
             );
         $mockBookingRepository
@@ -91,6 +92,7 @@ trait BookingRepositoryInterfaceTrait
                 end: new DateTime('2020-01-05'),
             ),
             2,
+            7,
         ]);
     }
 
