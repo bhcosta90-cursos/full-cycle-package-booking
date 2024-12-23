@@ -33,7 +33,7 @@ trait BookingRepositoryInterfaceTrait
         $mockBookingRepository
             ->shouldReceive('findById')
             ->with("fulano")
-            ->between(0, 1)
+            ->atMost()->once()
             ->andReturn(
                 new Booking(
                     id: "fulano",
@@ -46,7 +46,7 @@ trait BookingRepositoryInterfaceTrait
         $mockBookingRepository
             ->shouldReceive('findById')
             ->with("fake")
-            ->between(0, 1)
+            ->atMost()->once()
             ->andReturn(null);
 
         return $this;
@@ -68,7 +68,7 @@ trait BookingRepositoryInterfaceTrait
         $mockBookingRepository = $this->mockBookingRepositoryInterface();
         $mockBookingRepository
             ->shouldReceive('save')
-            ->between(0, 1)
+            ->atMost()->once()
             ->withArgs(function (Booking $booking) {
                 return $booking->property->title === 'Fulano'
                     && $booking->user->name === 'Fulano';

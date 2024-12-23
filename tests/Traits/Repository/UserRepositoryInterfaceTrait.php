@@ -15,13 +15,13 @@ trait UserRepositoryInterfaceTrait
         $mockUserRepository = $this->mockUserRepositoryInterface();
         $mockUserRepository
             ->shouldReceive('findById')
-            ->between(0, 1)
+            ->atMost()->once()
             ->with("fulano")
             ->andReturn($this->getEntityUser());
 
         $mockUserRepository
             ->shouldReceive('findById')
-            ->between(0, 1)
+            ->atMost()->once()
             ->with("fake")
             ->andReturn(null);
 

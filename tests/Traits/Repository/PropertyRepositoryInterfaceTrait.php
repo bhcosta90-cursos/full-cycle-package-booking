@@ -21,7 +21,7 @@ trait PropertyRepositoryInterfaceTrait
         $mockPropertyRepository
             ->shouldReceive('findById')
             ->with("fulano")
-            ->between(0, 1)
+            ->atMost()->once()
             ->andReturn(
                 $property ?: $this->getEntityProperty(
                     $maxGuests,
@@ -32,7 +32,7 @@ trait PropertyRepositoryInterfaceTrait
             );
         $mockPropertyRepository
             ->shouldReceive('findById')
-            ->between(0, 1)
+            ->atMost()->once()
             ->with("fake")
             ->andReturn(null);
 

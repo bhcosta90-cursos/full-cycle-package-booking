@@ -13,7 +13,7 @@ beforeEach(function () {
     ($this->mockDateRange = Mockery::mock(DateRangeFactoryInterface::class))
         ->shouldReceive('create')
         ->with('2021-10-01', '2021-10-10')
-        ->between(0, 1)
+        ->atMost()->once()
         ->andReturn(
             new DateRange(
                 start: new DateTime('2021-10-01'),
