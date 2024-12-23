@@ -14,6 +14,6 @@ class ShowPropertyUseCase
 
     public function handle(string $id): ?Property
     {
-        return $this->propertyRepository->findById($id, new DateTime());
+        return $this->propertyRepository->findById($id, new DateTime(), new DateTime());
     }
 }

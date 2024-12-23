@@ -7,5 +7,5 @@ use Package\Entity\Property;
 
 interface PropertyRepositoryInterface
 {
-    public function findById(string $id, DateTime $bookingsDateTime): ?Property;
+    public function findById(string $id, DateTime $bookingsStartDateTime, DateTime $bookingsEndDateTime): ?Property;
 }

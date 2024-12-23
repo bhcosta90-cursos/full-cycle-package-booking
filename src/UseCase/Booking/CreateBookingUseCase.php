@@ -22,7 +22,7 @@ class CreateBookingUseCase
 
     public function handle(BookingCreateInput $input): Booking
     {
-        if (!$property = $this->propertyRepository->findById($input->propertyId, $input->start)) {
+        if (!$property = $this->propertyRepository->findById($input->propertyId, $input->start, $input->end)) {
             throw new ServiceException('Propriedade não existe');
         }
 
