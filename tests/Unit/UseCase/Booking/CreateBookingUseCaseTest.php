@@ -22,7 +22,7 @@ beforeEach(function () {
         );
 });
 
-it('deve criar uma reserva com sucesso', function () {
+test('deve criar uma reserva com sucesso', function () {
     $useCase = new CreateBookingUseCase(
         propertyRepository: $this
             ->findPropertyRepositoryInterface()
@@ -54,7 +54,7 @@ it('deve criar uma reserva com sucesso', function () {
         ->getTotalPrice()->toBe(1620.0);
 });
 
-it('deve lançar um erro se acaso a propriedade não existe', function () {
+test('deve lançar um erro se acaso a propriedade não existe', function () {
     $useCase = new CreateBookingUseCase(
         propertyRepository: $this
             ->findPropertyRepositoryInterface()
@@ -86,7 +86,7 @@ it('deve lançar um erro se acaso a propriedade não existe', function () {
         ->getTotalPrice()->toBe(1620.0);
 })->throws('Propriedade não existe');
 
-it('deve lançar um erro se acaso o usuário não existe', function () {
+test('deve lançar um erro se acaso o usuário não existe', function () {
     $useCase = new CreateBookingUseCase(
         propertyRepository: $this
             ->findPropertyRepositoryInterface()
@@ -118,7 +118,7 @@ it('deve lançar um erro se acaso o usuário não existe', function () {
         ->getTotalPrice()->toBe(1620.0);
 })->throws('Usuário não existe');
 
-it('deve lançar erro ao tentar criar um reserva com o período já reservado', function () {
+test('deve lançar erro ao tentar criar um reserva com o período já reservado', function () {
     $property = $this->getEntityPropertyBlank();
     $property->shouldReceive('addBooking');
     $property->shouldReceive('validateMaxGuests');

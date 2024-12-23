@@ -15,10 +15,10 @@ beforeEach(function () {
 });
 
 
-it('deve conseguir cancelar uma reserva', function () {
+test('deve conseguir cancelar uma reserva', function () {
     $this->useCase->handle("fulano");
 });
 
-it('não devo conseguir cancelar uma reserva que não existe', function () {
+test('não devo conseguir cancelar uma reserva que não existe', function () {
     $this->useCase->handle("fake");
 })->throws('Reserva não existe');

@@ -213,7 +213,7 @@ test('não deve realizar o agendamento quando uma propriedade se não estiver di
     );
 })->throws('A propriedade não está disponível para a data solicitadas.');
 
-it('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', function () {
+test('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', function () {
     $property = new Property(
         id: '1',
         title: 'Casa de praia',
@@ -243,37 +243,38 @@ it('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', funct
         ->getTotalPrice()->toBe(0.0);
 });
 
-it('deve cancelar uma reserva com o reembolso total quando a data for superior a 7 dias antes da entrada', function () {
-    $property = new Property(
-        id: '1',
-        title: 'Casa de praia',
-        description: 'Casa de praia com 3 quartos',
-        maxGuests: 4,
-        basePriceByNight: 100,
-    );
+test('deve cancelar uma reserva com o reembolso total quando a data for superior a 7 dias antes da entrada',
+    function () {
+        $property = new Property(
+            id: '1',
+            title: 'Casa de praia',
+            description: 'Casa de praia com 3 quartos',
+            maxGuests: 4,
+            basePriceByNight: 100,
+        );
 
-    $dateRange = new DateRange(
-        start: new DateTime('2020-01-01'),
-        end: new DateTime('2020-01-04'),
-    );
+        $dateRange = new DateRange(
+            start: new DateTime('2020-01-01'),
+            end: new DateTime('2020-01-04'),
+        );
 
-    $booking = new Booking(
-        id: '1',
-        property: $property,
-        user: $this->user,
-        dateRange: $dateRange,
-        guestCount: $property->maxGuests,
-        daysCanceled: 7,
-    );
+        $booking = new Booking(
+            id: '1',
+            property: $property,
+            user: $this->user,
+            dateRange: $dateRange,
+            guestCount: $property->maxGuests,
+            daysCanceled: 7,
+        );
 
-    $booking->cancel(new DateTime('2019-12-24'));
+        $booking->cancel(new DateTime('2019-12-24'));
 
-    expect($booking)
-        ->isCanceled()->toBeTrue()
-        ->getTotalPrice()->toBe(300.0);
-});
+        expect($booking)
+            ->isCanceled()->toBeTrue()
+            ->getTotalPrice()->toBe(300.0);
+    });
 
-it(
+test(
     'deve cancelar uma reserva com o reembolso parcial quando a data for inferior a 7 dias antes da entrada',
     function () {
         $property = new Property(
@@ -306,7 +307,7 @@ it(
     },
 );
 
-it('não pode cancelar a mesma reserva', function () {
+test('não pode cancelar a mesma reserva', function () {
     $property = new Property(
         id: '1',
         title: 'Casa de praia',
