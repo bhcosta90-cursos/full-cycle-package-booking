@@ -6,7 +6,7 @@ use DateTime;
 use Package\Exception\ServiceException;
 use Package\Repository\BookingRepositoryInterface;
 
-class CancelBookingService
+class CancelBookingUseCase
 {
     public function __construct(
         protected BookingRepositoryInterface $bookingRepository,

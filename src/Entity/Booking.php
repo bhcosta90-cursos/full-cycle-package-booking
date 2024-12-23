@@ -13,7 +13,6 @@ use Package\ValueObject\Payment;
 class Booking
 {
     protected array $payments = [];
-    protected ?BookingStatus $status = null;
     protected float $total;
 
     public function __construct(
@@ -23,6 +22,7 @@ class Booking
         readonly protected(set) DateRange $dateRange,
         readonly protected(set) int $guestCount,
         readonly protected(set) int $daysCanceled,
+        protected(set) ?BookingStatus $status = null,
     ) {
         $this->validate();
         $this->property->addBooking($this);
@@ -37,10 +37,12 @@ class Booking
 
         $this->property->validateMaxGuests($this->guestCount);
 
-        match ($this->property->percentagePriceConfirmation) {
-            0.0 => $this->status = BookingStatus::Confirmed,
-            default => $this->status = BookingStatus::Pending,
-        };
+        if ($this->status !== BookingStatus::Canceled) {
+            match ($this->property->percentagePriceConfirmation) {
+                0.0 => $this->status = BookingStatus::Confirmed,
+                default => $this->status = BookingStatus::Pending,
+            };
+        }
 
         if (!$this->property->isAvailable($this->dateRange)) {
             throw new EntityExpetion('A propriedade não está disponível para a data solicitadas.');

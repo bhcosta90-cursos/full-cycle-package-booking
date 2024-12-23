@@ -76,7 +76,7 @@ class Property
     {
         return array_all(
             $this->bookings,
-            fn(Booking $booking) => !$booking->isConfirmed() || !$booking->dateRange->overlaps($dateRange),
+            fn(Booking $booking) => $booking->isCanceled() || !$booking->dateRange->overlaps($dateRange),
         );
     }
 }

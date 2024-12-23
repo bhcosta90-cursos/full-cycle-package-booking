@@ -1,12 +1,12 @@
 <?php
 
-use Package\UseCase\Booking\CancelBookingService;
+use Package\UseCase\Booking\CancelBookingUseCase;
 use Tests\Traits\Repository\BookingRepositoryInterfaceTrait;
 
 uses(BookingRepositoryInterfaceTrait::class);
 
 beforeEach(function () {
-    $this->useCase = new CancelBookingService(
+    $this->useCase = new CancelBookingUseCase(
         bookingRepository: $this
             ->findBookingRepositoryInterface()
             ->saveBookingRepositoryInterface()
