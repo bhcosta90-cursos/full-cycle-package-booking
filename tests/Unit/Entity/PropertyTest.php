@@ -61,7 +61,7 @@ test('não deve aplicar desconto para estadia menor de 7 noites', function () {
 
     $totalPrice = $this->property->calculateTotalPrice($dateRange);
 
-    expect($totalPrice)->toBe(541.28);
+    expect($totalPrice)->toBe(54128);
 });
 
 test('deve aplicar desconto para estadia 7 noites ou mais', function () {
@@ -72,7 +72,7 @@ test('deve aplicar desconto para estadia 7 noites ou mais', function () {
 
     $totalPrice = $this->property->calculateTotalPrice($dateRange);
 
-    expect($totalPrice)->toBe(852.51); // 7 noites * 130,32 * 100 - 10%
+    expect($totalPrice)->toBe(85251); // 7 noites * 130,32 * 100 - 10%
 
 });
 

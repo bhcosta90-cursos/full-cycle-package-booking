@@ -77,24 +77,27 @@ class Booking
 
         $totalPayments = $this->getTotalPayments();
 
-
-        $checkinValue = BcMathNumberFactory::create($this->getTotalPrice())
-            ->mul(100)
-            ->div($this->property->percentagePriceConfirmation)
-            ->div(100)
-            ->toFloat();
+        $checkinValue = $this->getTotalCheckinValue();
 
         if ($totalPayments >= $checkinValue) {
             $this->status = BookingStatus::Confirmed;
         }
     }
 
-    public function getTotalPayments(): float
+    public function getTotalPayments(): int
     {
         return array_sum(array_map(fn($payment) => $payment->amount, $this->payments));
     }
 
-    public function getTotalPrice(): float
+    public function getTotalCheckinValue(): int
+    {
+        return (int) BcMathNumberFactory::create($this->property->percentagePriceConfirmation)
+            ->div(100)
+            ->mul($this->total)
+            ->getValue();
+    }
+
+    public function getTotalPrice(): int
     {
         return $this->total;
     }

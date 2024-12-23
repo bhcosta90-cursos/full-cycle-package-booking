@@ -48,7 +48,7 @@ class Property
         }
     }
 
-    public function calculateTotalPrice(DateRange $dateRange): float
+    public function calculateTotalPrice(DateRange $dateRange): int
     {
         $totalGuest = BcMathNumberFactory::create($this->basePriceByGuests)
             ->mul(100)
@@ -64,7 +64,7 @@ class Property
         }
 
         //82101.60
-        return $totalProperty->div(100)->toFloat();
+        return (int) $totalProperty->getValue();
     }
 
     public function addBooking(Booking $booking): void

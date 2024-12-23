@@ -78,25 +78,25 @@ test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', f
         new Payment(
             type: PaymentType::CheckinValue,
             method: PaymentMethod::Pix,
-            amount: 10,
+            amount: 1000,
         ),
     );
 
     expect($booking)
         ->isConfirmed()->toBeFalse()
-        ->getTotalPayments()->toBe(10.0);
+        ->getTotalPayments()->toBe(1000);
 
     $booking->addPayment(
         new Payment(
             type: PaymentType::CheckinValue,
             method: PaymentMethod::Pix,
-            amount: 50,
+            amount: 5000,
         ),
     );
 
     expect($booking)
         ->isConfirmed()->toBeTrue()
-        ->getTotalPayments()->toBe(60.0);
+        ->getTotalPayments()->toBe(6000);
 });
 
 test('estou dando o valor mínimo de entrada para poder confirmar o agendamento', function () {
@@ -132,13 +132,13 @@ test('estou dando o valor mínimo de entrada para poder confirmar o agendamento'
         new Payment(
             type: PaymentType::CheckinValue,
             method: PaymentMethod::Pix,
-            amount: 52.12,
+            amount: 5212,
         ),
     );
 
     expect($booking)
         ->isConfirmed()->toBeTrue()
-        ->getTotalPayments()->toBe(52.12);
+        ->getTotalPayments()->toBe(5212);
 });
 
 
@@ -180,7 +180,7 @@ test('deve calcular o preço total com desconto', function () {
         daysCanceled: 7,
     );
 
-    expect($booking->getTotalPrice())->toBe(1055.59); // 130.32 * 9 * 0.9 = 1058.64
+    expect($booking->getTotalPrice())->toBe(105559); // 130.32 * 9 * 0.9 = 1058.64
 });
 
 test('não deve realizar o agendamento quando uma propriedade se não estiver disponível', function () {
@@ -240,7 +240,7 @@ test('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', fun
 
     expect($booking)
         ->isCanceled()->toBeTrue()
-        ->getTotalPrice()->toBe(0.0);
+        ->getTotalPrice()->toBe(0);
 });
 
 test('deve cancelar uma reserva com o reembolso total quando a data for superior a 7 dias antes da entrada',
@@ -271,7 +271,7 @@ test('deve cancelar uma reserva com o reembolso total quando a data for superior
 
         expect($booking)
             ->isCanceled()->toBeTrue()
-            ->getTotalPrice()->toBe(300.0);
+            ->getTotalPrice()->toBe(30000);
     });
 
 test(
@@ -303,7 +303,7 @@ test(
 
         expect($booking)
             ->isCanceled()->toBeTrue()
-            ->getTotalPrice()->toBe(150.0);
+            ->getTotalPrice()->toBe(15000);
     },
 );
 
@@ -333,3 +333,33 @@ test('não pode cancelar a mesma reserva', function () {
     $booking->cancel(new DateTime('2019-12-31'));
     $booking->cancel(new DateTime('2019-12-31'));
 })->throws('A reserva já foi cancelada.');
+
+test('deve calcular o valor total e o valor de entrada para a reserva', function () {
+    $property = new Property(
+        id: '1',
+        title: 'Casa de praia',
+        description: 'Casa de praia com 3 quartos',
+        maxGuests: 4,
+        basePriceByNight: 412.04,
+        basePriceByGuests: 656.21,
+        percentagePriceConfirmation: 15,
+    );
+
+    $dateRange = new DateRange(
+        start: new DateTime('2020-01-05'),
+        end: new DateTime('2020-01-10'),
+    );
+
+    $booking = new Booking(
+        id: '1',
+        property: $property,
+        user: $this->user,
+        dateRange: $dateRange,
+        guestCount: $property->maxGuests,
+        daysCanceled: 7,
+    );
+
+    expect($booking)
+        ->getTotalPrice()->toBe(534125)
+        ->getTotalCheckinValue()->toBe(80118);
+});

@@ -51,7 +51,7 @@ test('deve criar uma reserva com sucesso', function () {
     expect($result)
         ->toBeInstanceOf(Booking::class)
         ->isConfirmed()->toBeTrue()
-        ->getTotalPrice()->toBe(1620.0);
+        ->getTotalPrice()->toBe(1620);
 });
 
 test('deve lançar um erro se acaso a propriedade não existe', function () {
@@ -83,7 +83,7 @@ test('deve lançar um erro se acaso a propriedade não existe', function () {
     expect($result)
         ->toBeInstanceOf(Booking::class)
         ->isConfirmed()->toBeTrue()
-        ->getTotalPrice()->toBe(1620.0);
+        ->getTotalPrice()->toBe(1620);
 })->throws('Propriedade não existe');
 
 test('deve lançar um erro se acaso o usuário não existe', function () {
@@ -115,7 +115,7 @@ test('deve lançar um erro se acaso o usuário não existe', function () {
     expect($result)
         ->toBeInstanceOf(Booking::class)
         ->isConfirmed()->toBeTrue()
-        ->getTotalPrice()->toBe(1620.0);
+        ->getTotalPrice()->toBe(1620);
 })->throws('Usuário não existe');
 
 test('deve lançar erro ao tentar criar um reserva com o período já reservado', function () {
