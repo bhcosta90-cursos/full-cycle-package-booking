@@ -22,18 +22,18 @@ class CreateBookingUseCase
 
     public function handle(BookingCreateInput $input): Booking
     {
-        if (!$property = $this->propertyRepository->findById($input->propertyId, $input->start, $input->end)) {
+        $dateRange = $this->dateRangeFactory->create(
+            $input->start->format('Y-m-d'),
+            $input->end->format('Y-m-d'),
+        );
+
+        if (!$property = $this->propertyRepository->findById($input->propertyId, $dateRange)) {
             throw new ServiceException('Propriedade não existe');
         }
 
         if (!$user = $this->userRepository->findById($input->guestId)) {
             throw new ServiceException('Usuário não existe');
         }
-
-        $dateRange = $this->dateRangeFactory->create(
-            $input->start->format('Y-m-d'),
-            $input->end->format('Y-m-d'),
-        );
 
         $booking = new Booking(
             id: (string) Uuid::uuid4(),

@@ -2,10 +2,10 @@
 
 namespace Tests\Traits\Repository;
 
-use DateTime;
 use Mockery;
 use Package\Entity\Property;
 use Package\Repository\PropertyRepositoryInterface;
+use Package\ValueObject\DateRange;
 
 trait PropertyRepositoryInterfaceTrait
 {
@@ -22,7 +22,7 @@ trait PropertyRepositoryInterfaceTrait
         $mockPropertyRepository
             ->shouldReceive('findById')
             ->withArgs(function ($id, $date) {
-                return $id === 'fulano' && $date instanceof DateTime;
+                return $id === 'fulano' && $date instanceof DateRange;
             })
             ->atMost()->once()
             ->andReturn(
@@ -37,7 +37,7 @@ trait PropertyRepositoryInterfaceTrait
             ->shouldReceive('findById')
             ->atMost()->once()
             ->withArgs(function ($id, $date) {
-                return $id === 'fake' && $date instanceof DateTime;
+                return $id === 'fake' && $date instanceof DateRange;
             })
             ->andReturn(null);
 

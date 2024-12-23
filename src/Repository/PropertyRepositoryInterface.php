@@ -2,10 +2,10 @@
 
 namespace Package\Repository;
 
-use DateTime;
 use Package\Entity\Property;
+use Package\ValueObject\DateRange;
 
 interface PropertyRepositoryInterface
 {
-    public function findById(string $id, DateTime $bookingsStartDateTime, DateTime $bookingsEndDateTime): ?Property;
+    public function findById(string $id, DateRange $dateRange): ?Property;
 }
