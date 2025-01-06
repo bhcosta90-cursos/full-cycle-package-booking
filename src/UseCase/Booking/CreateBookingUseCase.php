@@ -4,7 +4,7 @@ namespace Package\UseCase\Booking;
 
 use Package\DTO\Booking\BookingCreateInput;
 use Package\Entity\Booking;
-use Package\Exception\ServiceException;
+use Package\Exception\UseCaseException;
 use Package\Factory\DateRangeFactoryInterface;
 use Package\Repository\BookingRepositoryInterface;
 use Package\Repository\PropertyRepositoryInterface;
@@ -28,11 +28,11 @@ class CreateBookingUseCase
         );
 
         if (!$property = $this->propertyRepository->findById($input->propertyId, $dateRange)) {
-            throw new ServiceException('Propriedade não existe');
+            throw new UseCaseException('Propriedade não existe');
         }
 
         if (!$user = $this->userRepository->findById($input->guestId)) {
-            throw new ServiceException('Usuário não existe');
+            throw new UseCaseException('Usuário não existe');
         }
 
         $booking = new Booking(

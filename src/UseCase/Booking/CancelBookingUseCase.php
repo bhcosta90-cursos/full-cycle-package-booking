@@ -4,7 +4,7 @@ namespace Package\UseCase\Booking;
 
 use DateTime;
 use Package\Entity\Booking;
-use Package\Exception\ServiceException;
+use Package\Exception\UseCaseException;
 use Package\Repository\BookingRepositoryInterface;
 
 class CancelBookingUseCase
@@ -16,7 +16,7 @@ class CancelBookingUseCase
     public function handle(string $id, ?DateTime $cancelDateTime = null): Booking
     {
         if (!$booking = $this->bookingRepository->findById($id)) {
-            throw new ServiceException('Reserva não existe');
+            throw new UseCaseException('Reserva não existe');
         }
 
         $booking->cancel($cancelDateTime ?: new DateTime());

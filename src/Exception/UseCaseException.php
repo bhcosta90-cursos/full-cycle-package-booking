@@ -4,4 +4,4 @@ namespace Package\Exception;
 
 use Exception;
 
-class ServiceException extends Exception {}
+class UseCaseException extends Exception {}
