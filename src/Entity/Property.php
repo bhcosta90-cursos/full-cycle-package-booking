@@ -2,7 +2,7 @@
 
 namespace Package\Entity;
 
-use Package\Exception\EntityExpetion;
+use Package\Exception\EntityException;
 use Package\Factory\BcMathNumberFactory;
 use Package\ValueObject\DateRange;
 
@@ -27,22 +27,22 @@ class Property
     protected function validate(): void
     {
         if (empty(trim($this->title))) {
-            throw new EntityExpetion('O título da propriedade não pode ser vázio');
+            throw new EntityException('O título da propriedade não pode ser vázio');
         }
 
         if (empty(trim($this->description))) {
-            throw new EntityExpetion('A descrição da propriedade não pode ser vázio');
+            throw new EntityException('A descrição da propriedade não pode ser vázio');
         }
 
         if ($this->maxGuests <= 0) {
-            throw new EntityExpetion('O número de hospedes deve ser maior que zero');
+            throw new EntityException('O número de hospedes deve ser maior que zero');
         }
     }
 
     public function validateMaxGuests(int $maxGuests): void
     {
         if ($maxGuests > $this->maxGuests) {
-            throw new EntityExpetion(
+            throw new EntityException(
                 "Número máximo de hóspedes excedido. O limite é de {$this->maxGuests}.",
             );
         }

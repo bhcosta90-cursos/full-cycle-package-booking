@@ -4,7 +4,7 @@ namespace Package\Entity;
 
 use DateTime;
 use Package\Enum\BookingStatus;
-use Package\Exception\EntityExpetion;
+use Package\Exception\EntityException;
 use Package\Factory\BcMathNumberFactory;
 use Package\Factory\CalculateRefundFactory;
 use Package\ValueObject\DateRange;
@@ -32,7 +32,7 @@ class Booking
     protected function validate(): void
     {
         if ($this->guestCount <= 0) {
-            throw new EntityExpetion('O número de hospedes deve ser maior que zero');
+            throw new EntityException('O número de hospedes deve ser maior que zero');
         }
 
         $this->property->validateMaxGuests($this->guestCount);
@@ -45,7 +45,7 @@ class Booking
         }
 
         if (!$this->property->isAvailable($this->dateRange)) {
-            throw new EntityExpetion('A propriedade não está disponível para a data solicitadas.');
+            throw new EntityException('A propriedade não está disponível para a data solicitadas.');
         }
     }
 
@@ -57,7 +57,7 @@ class Booking
     public function cancel(DateTime $dateCancel): void
     {
         if ($this->isCanceled()) {
-            throw new EntityExpetion('A reserva já foi cancelada.');
+            throw new EntityException('A reserva já foi cancelada.');
         }
 
         $checkingDate = $this->dateRange->start;
