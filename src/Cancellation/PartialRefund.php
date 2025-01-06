@@ -7,8 +7,8 @@ use Package\Factory\BcMathNumberFactory;
 class PartialRefund implements RefundRule
 {
 
-    public function calculateRefund(float $total): float
+    public function calculateRefund(int $total): int
     {
-        return BcMathNumberFactory::create($total)->mul(0.5)->toFloat();
+        return (int) BcMathNumberFactory::create($total)->mul(0.5)->getValue();
     }
 }

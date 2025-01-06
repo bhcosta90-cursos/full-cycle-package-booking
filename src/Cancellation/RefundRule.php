@@ -4,5 +4,5 @@ namespace Package\Cancellation;
 
 interface RefundRule
 {
-    public function calculateRefund(float $total): float;
+    public function calculateRefund(int $total): int;
 }

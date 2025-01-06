@@ -5,7 +5,7 @@ namespace Package\Cancellation;
 class FullRefund implements RefundRule
 {
 
-    public function calculateRefund(float $total): float
+    public function calculateRefund(int $total): int
     {
         return $total;
     }

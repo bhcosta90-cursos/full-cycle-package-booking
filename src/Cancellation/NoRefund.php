@@ -5,8 +5,8 @@ namespace Package\Cancellation;
 class NoRefund implements RefundRule
 {
 
-    public function calculateRefund(float $total): float
+    public function calculateRefund(int $total): int
     {
-        return 0.0;
+        return 0;
     }
 }

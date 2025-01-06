@@ -1,5 +1,6 @@
 <?php
 
+use Package\Entity\Booking;
 use Package\UseCase\Booking\CancelBookingUseCase;
 use Tests\Traits\Repository\BookingRepositoryInterfaceTrait;
 
@@ -16,7 +17,9 @@ beforeEach(function () {
 
 
 test('deve conseguir cancelar uma reserva', function () {
-    $this->useCase->handle("fulano");
+    $result = $this->useCase->handle("fulano");
+
+    expect($result)->toBeInstanceOf(Booking::class);
 });
 
 test('não devo conseguir cancelar uma reserva que não existe', function () {
