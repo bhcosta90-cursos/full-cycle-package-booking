@@ -28,11 +28,11 @@ class CreateBookingUseCase
         );
 
         if (!$property = $this->propertyRepository->findById($input->propertyId, $dateRange)) {
-            throw new UseCaseException('Propriedade não existe');
+            throw new UseCaseException('Property does not exist');
         }
 
         if (!$user = $this->userRepository->findById($input->guestId)) {
-            throw new UseCaseException('Usuário não existe');
+            throw new UseCaseException('User does not exist');
         }
 
         $booking = new Booking(

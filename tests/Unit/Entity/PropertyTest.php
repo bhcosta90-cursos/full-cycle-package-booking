@@ -16,7 +16,7 @@ beforeEach(function () {
     );
 });
 
-test('deve criar uma instância de propriedade com todos os atributos', function () {
+test('must create a property instance with all attributes', function () {
     expect($this->property)
         ->id->toBe('1')
         ->title->toBe('Casa de praia')
@@ -25,7 +25,7 @@ test('deve criar uma instância de propriedade com todos os atributos', function
         ->basePriceByNight->toBe(130.32);
 });
 
-test('deve lançar um erro se o nome for vázio', fn() => new Property(
+test('should throw an error if name is empty', fn() => new Property(
     id: '1',
     title: ' ',
     description: 'Casa de praia com 3 quartos',
@@ -33,7 +33,7 @@ test('deve lançar um erro se o nome for vázio', fn() => new Property(
     basePriceByNight: 150.00,
 ))->throws('O título da propriedade não pode ser vázio');
 
-test('deve lançar um erro se a descrição for vázio', fn() => new Property(
+test('should throw an error if the description is empty', fn() => new Property(
     id: '1',
     title: 'testing',
     description: ' ',
@@ -41,7 +41,7 @@ test('deve lançar um erro se a descrição for vázio', fn() => new Property(
     basePriceByNight: 150.00,
 ))->throws('A descrição da propriedade não pode ser vázio');
 
-test('deve lançar um erro se o numero de hospedes for menor ou igual a zero', fn() => new Property(
+test('should throw an error if the number of guests is less than or equal to zero', fn() => new Property(
     id: '1',
     title: 'testing',
     description: 'testing',
@@ -49,11 +49,11 @@ test('deve lançar um erro se o numero de hospedes for menor ou igual a zero', f
     basePriceByNight: 150.00,
 ))->throws('O número de hospedes deve ser maior que zero');
 
-test('deve validar o numero máximo de hospedes', function () {
+test('must validate the maximum number of guests', function () {
     $this->property->validateMaxGuests(5);
 })->throws('Número máximo de hóspedes excedido. O limite é de 4.');
 
-test('não deve aplicar desconto para estadia menor de 7 noites', function () {
+test('no discount should be applied for stays of less than 7 nights', function () {
     $dateRange = new DateRange(
         start: new DateTime('2020-01-01'),
         end: new DateTime('2020-01-05'),
@@ -64,7 +64,7 @@ test('não deve aplicar desconto para estadia menor de 7 noites', function () {
     expect($totalPrice)->toBe(54128);
 });
 
-test('deve aplicar desconto para estadia 7 noites ou mais', function () {
+test('discount must be applied for stays of 7 nights or more', function () {
     $dateRange = new DateRange(
         start: new DateTime('2020-01-01'),
         end: new DateTime('2020-01-08'),
@@ -76,7 +76,7 @@ test('deve aplicar desconto para estadia 7 noites ou mais', function () {
 
 });
 
-test('deve verificar disponibilidade da propriedade', function () {
+test('must check property availability', function () {
     $user = new User(id: '1', name: 'Fulano', email: 'test@example.com');
 
     $dateRange = new DateRange(

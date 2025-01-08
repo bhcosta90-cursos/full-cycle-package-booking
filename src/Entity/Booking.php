@@ -45,7 +45,7 @@ class Booking
         }
 
         if (!$this->property->isAvailable($this->dateRange)) {
-            throw new EntityException('A propriedade não está disponível para a data solicitadas.');
+            throw new EntityException('The property is not available for the requested date.');
         }
     }
 

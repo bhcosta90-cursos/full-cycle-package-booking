@@ -6,7 +6,7 @@ use Tests\Traits\Repository\UserRepositoryInterfaceTrait;
 
 uses(UserRepositoryInterfaceTrait::class);
 
-test('deve retornar o usuário', function () {
+test('must return the user', function () {
     $useCase = new ShowUserUseCase(
         userRepository: $this
             ->findUserRepositoryInterface()

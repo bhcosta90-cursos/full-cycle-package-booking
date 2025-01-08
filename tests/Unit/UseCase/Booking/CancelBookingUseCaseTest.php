@@ -16,12 +16,12 @@ beforeEach(function () {
 });
 
 
-test('deve conseguir cancelar uma reserva', function () {
+test('should be able to cancel a reservation', function () {
     $result = $this->useCase->handle("fulano");
 
     expect($result)->toBeInstanceOf(Booking::class);
 });
 
-test('não devo conseguir cancelar uma reserva que não existe', function () {
+test("I shouldn't be able to cancel a reservation that doesn't exist", function () {
     $this->useCase->handle("fake");
 })->throws('Reserva não existe');

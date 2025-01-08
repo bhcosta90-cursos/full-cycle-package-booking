@@ -8,7 +8,7 @@ use Tests\Traits\Repository\PropertyRepositoryInterfaceTrait;
 
 uses(PropertyRepositoryInterfaceTrait::class);
 
-test('deve retornar a propriedade', function () {
+test('should return the property', function () {
     $dateRangeFactoryMock = Mockery::mock(DateRangeFactoryInterface::class);
     $dateRangeFactoryMock
         ->shouldReceive('create')

@@ -22,7 +22,7 @@ beforeEach(function () {
         );
 });
 
-test('deve criar uma reserva com sucesso', function () {
+test('must create a reservation successfully', function () {
     $useCase = new CreateBookingUseCase(
         propertyRepository: $this
             ->findPropertyRepositoryInterface()
@@ -54,7 +54,7 @@ test('deve criar uma reserva com sucesso', function () {
         ->getTotalPrice()->toBe(1620);
 });
 
-test('deve lançar um erro se acaso a propriedade não existe', function () {
+test('should throw an error if the property does not exist', function () {
     $useCase = new CreateBookingUseCase(
         propertyRepository: $this
             ->findPropertyRepositoryInterface()
@@ -84,9 +84,9 @@ test('deve lançar um erro se acaso a propriedade não existe', function () {
         ->toBeInstanceOf(Booking::class)
         ->isConfirmed()->toBeTrue()
         ->getTotalPrice()->toBe(1620);
-})->throws('Propriedade não existe');
+})->throws('Property does not exist');
 
-test('deve lançar um erro se acaso o usuário não existe', function () {
+test('should throw an error if the user does not exist', function () {
     $useCase = new CreateBookingUseCase(
         propertyRepository: $this
             ->findPropertyRepositoryInterface()
@@ -116,9 +116,9 @@ test('deve lançar um erro se acaso o usuário não existe', function () {
         ->toBeInstanceOf(Booking::class)
         ->isConfirmed()->toBeTrue()
         ->getTotalPrice()->toBe(1620);
-})->throws('Usuário não existe');
+})->throws('User does not exist');
 
-test('deve lançar erro ao tentar criar um reserva com o período já reservado', function () {
+test('should throw an error when trying to create a reservation with the period already reserved', function () {
     $property = $this->getEntityPropertyBlank();
     $property->shouldReceive('addBooking');
     $property->shouldReceive('validateMaxGuests');
@@ -149,4 +149,4 @@ test('deve lançar erro ao tentar criar um reserva com o período já reservado'
     );
 
     $useCase->handle($input);
-})->throws('A propriedade não está disponível para a data solicitadas.');
+})->throws('The property is not available for the requested date.');

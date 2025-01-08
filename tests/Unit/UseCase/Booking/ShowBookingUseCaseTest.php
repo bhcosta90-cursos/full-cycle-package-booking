@@ -6,7 +6,7 @@ use Tests\Traits\Repository\BookingRepositoryInterfaceTrait;
 
 uses(BookingRepositoryInterfaceTrait::class);
 
-test('deve retornar a reserva', function () {
+test('must return the reservation', function () {
     $useCase = new ShowBookingUseCase(
         bookingRepository: $this
             ->findBookingRepositoryInterface()

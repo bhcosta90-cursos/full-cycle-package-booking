@@ -34,7 +34,7 @@ beforeEach(function () {
     );
 });
 
-test('deve criar uma instância de propriedade com todos os atributos', function () {
+test('must create a property instance with all attributes', function () {
     expect($this->booking)
         ->id->toBe('1')
         ->property->title->toBe('Casa de praia')
@@ -45,7 +45,7 @@ test('deve criar uma instância de propriedade com todos os atributos', function
         ->isConfirmed()->toBeTrue();
 });
 
-test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', function () {
+test('must have the down payment to confirm the rental of this property', function () {
     $property = new Property(
         id: '1',
         title: 'Casa de praia com valor de entrada',
@@ -99,7 +99,7 @@ test('deve ter o valor de entrada para confirmar o aluguel dessa propriedade', f
         ->getTotalPayments()->toBe(6000);
 });
 
-test('estou dando o valor mínimo de entrada para poder confirmar o agendamento', function () {
+test('should give the minimum entry value to confirm the appointment', function () {
     $property = new Property(
         id: '1',
         title: 'Casa de praia com valor de entrada 02',
@@ -142,7 +142,7 @@ test('estou dando o valor mínimo de entrada para poder confirmar o agendamento'
 });
 
 
-test('deve lançar o erro se o número de hospedes for menor que zero', function () {
+test('should throw the error if the number of guests is less than zero', function () {
     new Booking(
         id: '1',
         property: $this->property,
@@ -154,7 +154,7 @@ test('deve lançar o erro se o número de hospedes for menor que zero', function
 })->throws('O número de hospedes deve ser maior que zero');
 
 
-test('deve lançar o erro se o número de hospedes exceder', function () {
+test('should throw the error if the number of guests exceeds', function () {
     new Booking(
         id: '1',
         property: $this->property,
@@ -165,7 +165,7 @@ test('deve lançar o erro se o número de hospedes exceder', function () {
     );
 })->throws('Número máximo de hóspedes excedido. O limite é de 4.');
 
-test('deve calcular o preço total com desconto', function () {
+test('must calculate the total discounted price', function () {
     $dateRange = new DateRange(
         start: new DateTime('2020-01-06'),
         end: new DateTime('2020-01-15'),
@@ -183,7 +183,7 @@ test('deve calcular o preço total com desconto', function () {
     expect($booking->getTotalPrice())->toBe(105559); // 130.32 * 9 * 0.9 = 1058.64
 });
 
-test('não deve realizar o agendamento quando uma propriedade se não estiver disponível', function () {
+test('should not make an appointment when a property is not available', function () {
     $dateRange = new DateRange(
         start: new DateTime('2020-01-01'),
         end: new DateTime('2020-01-10'),
@@ -211,9 +211,9 @@ test('não deve realizar o agendamento quando uma propriedade se não estiver di
         guestCount: $this->property->maxGuests,
         daysCanceled: 7,
     );
-})->throws('A propriedade não está disponível para a data solicitadas.');
+})->throws('The property is not available for the requested date.');
 
-test('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', function () {
+test('must cancel a reservation when there is less than 1 day left until entry', function () {
     $property = new Property(
         id: '1',
         title: 'Casa de praia',
@@ -243,7 +243,7 @@ test('deve cancelar uma reserva quando falta menos de 1 dia para a entrada', fun
         ->getTotalPrice()->toBe(0);
 });
 
-test('deve cancelar uma reserva com o reembolso total quando a data for superior a 7 dias antes da entrada',
+test('must cancel a reservation with a full refund when the date is more than 7 days before arrival',
     function () {
         $property = new Property(
             id: '1',
@@ -274,9 +274,7 @@ test('deve cancelar uma reserva com o reembolso total quando a data for superior
             ->getTotalPrice()->toBe(30000);
     });
 
-test(
-    'deve cancelar uma reserva com o reembolso parcial quando a data for inferior a 7 dias antes da entrada',
-    function () {
+test('must cancel a reservation with partial refund when the date is less than 7 days before arrival', function () {
         $property = new Property(
             id: '1',
             title: 'Casa de praia',
@@ -307,7 +305,7 @@ test(
     },
 );
 
-test('não pode cancelar a mesma reserva', function () {
+test('it cannot cancel the same reservation', function () {
     $property = new Property(
         id: '1',
         title: 'Casa de praia',
@@ -334,7 +332,7 @@ test('não pode cancelar a mesma reserva', function () {
     $booking->cancel(new DateTime('2019-12-31'));
 })->throws('A reserva já foi cancelada.');
 
-test('deve calcular o valor total e o valor de entrada para a reserva', function () {
+test('must calculate the total value and entry value for the reservation', function () {
     $property = new Property(
         id: '1',
         title: 'Casa de praia',

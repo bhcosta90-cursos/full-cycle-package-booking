@@ -2,7 +2,7 @@
 
 use Package\ValueObject\DateRange;
 
-test('deve criar uma instância de date range com a data de inicio e final', function () {
+test('you must create an instance of date range with the start and end date', function () {
     $dateRange = new DateRange(
         start: $start = new DateTime('2020-01-01'),
         end: $end = new DateTime('2020-01-05'),
@@ -13,12 +13,12 @@ test('deve criar uma instância de date range com a data de inicio e final', fun
         ->end->toBeInstanceOf(DateTime::class);
 });
 
-test('deve lançar um erro se a data de termino for antes da data de inicio', fn() => new DateRange(
+test('should throw an error if the end date is before the start date', fn() => new DateRange(
     start: new DateTime('2020-01-05'),
     end: new DateTime('2019-01-01'),
-))->throws('A data de término deve ser posterior à data de início');
+))->throws('The end date must be later than the start date');
 
-test('deve calcular o total de noites corretamente', function () {
+test('must calculate the total nights correctly', function () {
     $dateRange = new DateRange(
         start: new DateTime('2020-01-05'),
         end: new DateTime('2020-01-10'),
@@ -34,7 +34,7 @@ test('deve calcular o total de noites corretamente', function () {
     expect($dateRange->getTotalNights())->toBe(15);
 });
 
-test('verificar se dois intervalos de data se sobrepõe', function () {
+test('check if two date ranges overlap', function () {
     $dateRange01 = new DateRange(
         start: new DateTime('2020-01-05'),
         end: new DateTime('2020-01-10'),
@@ -50,7 +50,7 @@ test('verificar se dois intervalos de data se sobrepõe', function () {
     expect($overlaps)->toBeTrue();
 });
 
-test('deve lançar erro se a data de inicio for igual a data final', fn() => new DateRange(
+test('should throw an error if the start date is equal to the end date', fn() => new DateRange(
     start: new DateTime('2020-01-05'),
     end: new DateTime('2020-01-05'),
-))->throws('A data de término não pode ser igual à data de início');
+))->throws('The end date cannot be the same as the start date');

@@ -2,7 +2,7 @@
 
 use Package\Entity\User;
 
-test('deve criar uma instância de date range com a data de inicio e final', function () {
+test('must create an instance of date range with the start and end date', function () {
     $user = new User(
         id: '1',
         name: 'test',
@@ -14,19 +14,19 @@ test('deve criar uma instância de date range com a data de inicio e final', fun
         ->name->toBe('test');
 });
 
-test('deve lançar erro se o nome estiver vázio', fn() => new User(
+test('should throw error if name is empty', fn() => new User(
     id: '1',
     name: ' ',
     email: 'test@example.com',
 ))->throws('O nome do usuário não pode ser vázio');
 
-test('deve lançar erro se o id estiver vázio', fn() => new User(
+test('should throw error if id is empty', fn() => new User(
     id: '',
     name: 'testing',
     email: 'test@example.com',
 ))->throws('O nome do usuário não pode ser vázio');
 
-test('deve lançar erro se o e-mail estiver vázio', fn() => new User(
+test('should throw error if email is empty', fn() => new User(
     id: '1',
     name: 'testing',
     email: ' ',

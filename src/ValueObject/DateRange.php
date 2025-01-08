@@ -20,11 +20,11 @@ class DateRange
     private function validate(DateTime $start, DateTime $end): void
     {
         if ($end->format('Ymd') === $start->format('Ymd')) {
-            throw new InvalidArgumentException('A data de término não pode ser igual à data de início');
+            throw new InvalidArgumentException('The end date cannot be the same as the start date');
         }
 
         if ($end <= $start) {
-            throw new InvalidArgumentException('A data de término deve ser posterior à data de início');
+            throw new InvalidArgumentException('The end date must be later than the start date');
         }
     }
 
